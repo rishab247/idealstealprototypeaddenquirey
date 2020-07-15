@@ -1,6 +1,7 @@
 package com.example.idealstealprototypeaddenquirey;
 
         import android.content.Context;
+        import android.content.Intent;
         import android.text.Editable;
         import android.text.TextWatcher;
         import android.util.Log;
@@ -15,6 +16,7 @@ package com.example.idealstealprototypeaddenquirey;
 
 
         import com.example.idealstealprototypeaddenquirey.data.AddEnqData;
+        import com.example.idealstealprototypeaddenquirey.data.Measuredata;
 
         import java.util.ArrayList;
 
@@ -55,23 +57,40 @@ public class Gradeadapter extends BaseAdapter {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
                 final ViewHolder holder;
                 convertView=null;
+
                 if (convertView == null) {
                         holder = new ViewHolder();
                         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         convertView = mInflater.inflate(R.layout.add_enqrow, null);
+
                         holder.caption = (EditText) convertView
                                 .findViewById(R.id.editText6);
                         holder.caption.setTag(position);
-                        holder.caption.setText(listforview.get(position).getGradeText().toString());
+                        holder.addbtn =  convertView
+                                .findViewById(R.id.button);
+                        holder.addbtn.setTag(position);
                         convertView.setTag(holder);
                 }else {
                         holder = (ViewHolder) convertView.getTag();
                 }
-                int tag_position=(Integer) holder.caption.getTag();
-                holder.caption.setId(position);
+                 holder.caption.setId(position);
+                holder.caption.setText(listforview.get(position).getGradeText());
+                holder.addbtn.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                Intent intent = new Intent(context,MeasureActivity.class);
+                                intent.putExtra("array",listforview.get(position).getList());
+
+//                                listforview.get(position).getList().add(new Measuredata("xfx","213"));
+
+                                Log.e("TAG", "onClick: "+ listforview.get(position).getList().size());
+                                context.startActivity(intent);
+                        }
+                });
+
 
                 holder.caption.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
@@ -80,6 +99,11 @@ public class Gradeadapter extends BaseAdapter {
                                         final int position = v.getId();
                                         final EditText Caption = (EditText) v;
                                         Log.e("TAG", "onFocusChange: "+Caption.getText() );
+                                        try {
+                                                listforview.get(position).setGradeText(Caption.getText().toString());
+                                        }catch (Exception e){
+                                                e.printStackTrace();
+                                        }
                                         }
                         }
                 });
@@ -92,4 +116,5 @@ public class Gradeadapter extends BaseAdapter {
 //
 }class ViewHolder {
         EditText caption;
+        TextView addbtn;
 }
