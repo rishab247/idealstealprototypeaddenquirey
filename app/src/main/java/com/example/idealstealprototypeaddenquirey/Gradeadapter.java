@@ -1,5 +1,6 @@
 package com.example.idealstealprototypeaddenquirey;
 
+        import android.app.Activity;
         import android.content.Context;
         import android.content.Intent;
         import android.text.Editable;
@@ -83,11 +84,11 @@ public class Gradeadapter extends BaseAdapter {
                         public void onClick(View v) {
                                 Intent intent = new Intent(context,MeasureActivity.class);
                                 intent.putExtra("array",listforview.get(position).getList());
+                                intent.putExtra("position",position);
+                                 Log.e("TAG", "onClick: size "+ listforview.get(position).getList().size());
+                                Activity origin = (Activity)context;
 
-//                                listforview.get(position).getList().add(new Measuredata("xfx","213"));
-
-                                Log.e("TAG", "onClick: "+ listforview.get(position).getList().size());
-                                context.startActivity(intent);
+                                origin.startActivityForResult (intent,22);
                         }
                 });
 

@@ -2,7 +2,10 @@ package com.example.idealstealprototypeaddenquirey;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +52,12 @@ ListView list;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                Log.e("TAG", ""+ getIntent().getIntExtra("position",1122));
+                returnIntent.putExtra("position",getIntent().getIntExtra("position",1122));
+                returnIntent.putExtra("array", arrayList );
+//                returnIntent.putExtra("position",getIntent().putExtra("position",1122220));
+                setResult(22,returnIntent);
                 finish();
             }
         });
