@@ -62,42 +62,43 @@ public class Gradeadapter extends BaseAdapter {
                         holder = new ViewHolder();
                         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         convertView = mInflater.inflate(R.layout.add_enqrow, null);
-                        holder.caption = (EditText) convertView.findViewById(R.id.editText6);
+                        holder.caption = (EditText) convertView
+                                .findViewById(R.id.editText6);
                         holder.caption.setTag(position);
                         holder.caption.setText(listforview.get(position).getGradeText().toString());
                         convertView.setTag(holder);
                 }else {
                         holder = (ViewHolder) convertView.getTag();
-
-                        int tag_position = (Integer) holder.caption.getTag();
-                        holder.caption.setId(tag_position);
-
-                        holder.caption.addTextChangedListener(new TextWatcher() {
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before,
-                                                          int count) {
-                                        Log.e("TAG", "onTextChanged: " + s.toString());
-                                        final int position2 = holder.caption.getId();
-                                        final EditText Caption = (EditText) holder.caption;
-                                        if (Caption.getText().toString().length() > 0) {
-//                                        list.set(position2,Integer.parseInt(Caption.getText().toString()));
-                                        } else {
-                                                Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
-                                        }
-                                }
-
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count,
-                                                              int after) {
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-                                }
-
-                        });
                 }
+                int tag_position=(Integer) holder.caption.getTag();
+                holder.caption.setId(tag_position);
+
+                holder.caption.addTextChangedListener(new TextWatcher() {
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before,
+                                                  int count) {
+                                Log.e("TAG", "onTextChanged: "+s.toString());
+                                final int position2 = holder.caption.getId();
+                                final EditText Caption = (EditText) holder.caption;
+                                if(Caption.getText().toString().length()>0){
+//                                        list.set(position2,Integer.parseInt(Caption.getText().toString()));
+                                }else{
+                                        Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
+                                }
+                        }
+
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                                                      int after) {
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+
+                });
+
                 return convertView;
 
         }
