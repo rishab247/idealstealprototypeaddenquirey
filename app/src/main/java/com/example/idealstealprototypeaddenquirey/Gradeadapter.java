@@ -71,32 +71,17 @@ public class Gradeadapter extends BaseAdapter {
                         holder = (ViewHolder) convertView.getTag();
                 }
                 int tag_position=(Integer) holder.caption.getTag();
-                holder.caption.setId(tag_position);
+                holder.caption.setId(position);
 
-                holder.caption.addTextChangedListener(new TextWatcher() {
-
+                holder.caption.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before,
-                                                  int count) {
-                                Log.e("TAG", "onTextChanged: "+s.toString());
-                                final int position2 = holder.caption.getId();
-                                final EditText Caption = (EditText) holder.caption;
-                                if(Caption.getText().toString().length()>0){
-//                                        list.set(position2,Integer.parseInt(Caption.getText().toString()));
-                                }else{
-                                        Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
-                                }
+                        public void onFocusChange(View v, boolean hasFocus) {
+                                if (!hasFocus) {
+                                        final int position = v.getId();
+                                        final EditText Caption = (EditText) v;
+                                        Log.e("TAG", "onFocusChange: "+Caption.getText() );
+                                        }
                         }
-
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count,
-                                                      int after) {
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                        }
-
                 });
 
                 return convertView;
