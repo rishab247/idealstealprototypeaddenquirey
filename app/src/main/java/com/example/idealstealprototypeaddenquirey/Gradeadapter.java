@@ -12,9 +12,13 @@ package com.example.idealstealprototypeaddenquirey;
         import android.widget.ArrayAdapter;
         import android.widget.BaseAdapter;
         import android.widget.EditText;
+        import android.widget.LinearLayout;
         import android.widget.TextView;
         import android.widget.Toast;
 
+
+        import androidx.cardview.widget.CardView;
+        import androidx.constraintlayout.widget.ConstraintLayout;
 
         import com.example.idealstealprototypeaddenquirey.data.AddEnqData;
         import com.example.idealstealprototypeaddenquirey.data.Measuredata;
@@ -74,6 +78,21 @@ public class Gradeadapter extends BaseAdapter {
                                 .findViewById(R.id.button);
                         holder.addbtn.setTag(position);
                         convertView.setTag(holder);
+
+                        LinearLayout layout =convertView.findViewById(R.id.linearLayout);
+                        for (Measuredata data : listforview.get(position).getList()){
+                                View child = mInflater.inflate(R.layout.summary_view, null);
+                                TextView size = child.findViewById(R.id.sizetxt);
+                                TextView Piecestxt = child.findViewById(R.id.Piecestxt);
+                                Piecestxt.setText(data.getPieces());
+                                size.setText(data.getSize());
+                                layout.addView(child);
+
+
+                        }
+
+
+
                 }else {
                         holder = (ViewHolder) convertView.getTag();
                 }

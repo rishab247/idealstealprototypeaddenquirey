@@ -34,7 +34,8 @@ ListView list;
 
 
         final ArrayList<Measuredata>  arrayList =  (ArrayList<Measuredata>) getIntent().getSerializableExtra("array");
-        arrayList.add(new Measuredata("asd","asd"));
+        if (arrayList.size()==0)
+        arrayList.add(new Measuredata("",""));
 
 
         final Measureadapter adapter = new Measureadapter(this,arrayList);
