@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.idealstealprototypeaddenquirey.data.AddEnqData;
 import com.example.idealstealprototypeaddenquirey.data.Measuredata;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class MeasureActivity extends AppCompatActivity {
 ListView list;
+    EditText edit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,13 +30,21 @@ ListView list;
        list = findViewById(R.id.list);
         LayoutInflater inflater = getLayoutInflater();
 
-        ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.measure_footer,list, false);
+        final ViewGroup header = (ViewGroup)inflater.inflate(R.layout.measure_header,list, false);
+        list.addHeaderView(header, null, false);
+        final ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.measure_footer,list, false);
         list.addFooterView(footer, null, false);
         Button addmeasurement = footer.findViewById(R.id.imgbtn);
         Button save = footer.findViewById(R.id.savebtn);
+          edit = header.findViewById(R.id.editText60);
 
 
-        final ArrayList<Measuredata>  arrayList =  (ArrayList<Measuredata>) getIntent().getSerializableExtra("array");
+
+
+
+        final AddEnqData data = (AddEnqData) getIntent().getSerializableExtra("array");
+        edit.setText(data.getGradeText());
+        final ArrayList<Measuredata>  arrayList = data.getList();
         if (arrayList.size()==0)
         arrayList.add(new Measuredata("",""));
 
@@ -53,10 +64,14 @@ ListView list;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                data.setGradeText(edit.getText().toString().trim());
+                data.setList(arrayList);
                 Intent returnIntent = new Intent();
                 Log.e("TAG", ""+ getIntent().getIntExtra("position",1122));
                 returnIntent.putExtra("position",getIntent().getIntExtra("position",1122));
-                returnIntent.putExtra("array", arrayList );
+                returnIntent.putExtra("array", data );
 //                returnIntent.putExtra("position",getIntent().putExtra("position",1122220));
                 setResult(22,returnIntent);
                 finish();

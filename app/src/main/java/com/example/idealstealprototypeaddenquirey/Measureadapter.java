@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -67,6 +68,15 @@ public class Measureadapter extends BaseAdapter {
                         holder.size.setTag(position);
 
                         holder.Pieces.setTag(position);
+
+
+
+                        holder.remove = convertView
+                                .findViewById(R.id.button1234);
+                        holder.remove.setTag(position);
+
+
+
                         convertView.setTag(holder);
                 }else {
                         holder = (ViewHolder1) convertView.getTag();
@@ -75,6 +85,17 @@ public class Measureadapter extends BaseAdapter {
                 holder.size.setText(listforview.get(position ).getSize());
                 holder.Pieces.setId(position);
                 holder.Pieces.setText(listforview.get(position ).getPieces());
+
+
+                holder.remove.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                if(listforview.size()!=1){
+                                        listforview.remove(position);
+                                        notifyDataSetChanged();
+                                }
+                        }
+                });
 
 
                 holder.size.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -112,4 +133,5 @@ public class Measureadapter extends BaseAdapter {
 class ViewHolder1 {
         EditText Pieces;
         EditText size;
+        Button remove;
  }

@@ -3,6 +3,7 @@ package com.example.idealstealprototypeaddenquirey;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +30,15 @@ ListView list;
             Log.e("TAG", "onActivityResult: " + resultCode);
             Log.e("TAG", "onActivityResult: " + requestCode);
             Log.e("TAG", "onActivityResult: " + data.getIntExtra("position",1122));
-            final ArrayList<Measuredata>  arrayList =  (ArrayList<Measuredata>)  data.getSerializableExtra("array");
+
+            AddEnqData da = (AddEnqData) data.getSerializableExtra("array");
+
+            final ArrayList<Measuredata>  arrayList =  da.getList();
             Log.e("TAG", "onActivityResult: size " + arrayList.size());
+
+
             mListItems.get(data.getIntExtra("position",1122)).setList(arrayList);
+            mListItems.get(data.getIntExtra("position",1122)).setGradeText(da.getGradeText());
             adapter.notifyDataSetChanged();
         }
     }
@@ -52,7 +59,6 @@ ListView list;
         Button addgrade = footer.findViewById(R.id.button2);
         Button removegrade = footer.findViewById(R.id.button30);
         final ArrayList<Measuredata> li = new ArrayList<>();
-        mListItems.add(new AddEnqData("",li));
 
         adapter = new Gradeadapter(this,mListItems);
 //        list.setScrollingCacheEnabled(true);
@@ -64,7 +70,14 @@ ListView list;
             @Override
             public void onClick(View v) {
                 mListItems.add(new AddEnqData("",li));
-                adapter.notifyDataSetChanged();
+
+
+                Intent intent = new Intent(MainActivity.this,MeasureActivity.class);
+                intent.putExtra("array",mListItems.get(mListItems.size()-1));
+                intent.putExtra("position",mListItems.size()-1);
+                startActivityForResult (intent,22);
+
+
              }
         });
         removegrade.setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,7 @@ package com.example.idealstealprototypeaddenquirey;
         import android.view.ViewGroup;
         import android.widget.ArrayAdapter;
         import android.widget.BaseAdapter;
+        import android.widget.Button;
         import android.widget.EditText;
         import android.widget.LinearLayout;
         import android.widget.TextView;
@@ -73,10 +74,18 @@ public class Gradeadapter extends BaseAdapter {
 
                         holder.caption = (EditText) convertView
                                 .findViewById(R.id.editText6);
+
+                        holder.caption.setText(listforview.get(position).getGradeText()+"23456789");
+
                         holder.caption.setTag(position);
                         holder.addbtn =  convertView
                                 .findViewById(R.id.button);
                         holder.addbtn.setTag(position);
+
+                        holder.rembtn =  convertView
+                                .findViewById(R.id.button12);
+                        holder.rembtn.setTag(position);
+
                         convertView.setTag(holder);
 
                         LinearLayout layout =convertView.findViewById(R.id.linearLayout);
@@ -102,12 +111,19 @@ public class Gradeadapter extends BaseAdapter {
                         @Override
                         public void onClick(View v) {
                                 Intent intent = new Intent(context,MeasureActivity.class);
-                                intent.putExtra("array",listforview.get(position).getList());
+                                intent.putExtra("array",listforview.get(position));
                                 intent.putExtra("position",position);
-                                 Log.e("TAG", "onClick: size "+ listforview.get(position).getList().size());
+                                Log.e("TAG", "onClick: size "+ listforview.get(position).getList().size());
                                 Activity origin = (Activity)context;
 
                                 origin.startActivityForResult (intent,22);
+                        }
+                });
+                holder.rembtn.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                listforview.remove(position);
+                                notifyDataSetChanged();
                         }
                 });
 
@@ -136,5 +152,6 @@ public class Gradeadapter extends BaseAdapter {
 //
 }class ViewHolder {
         EditText caption;
-        TextView addbtn;
+        Button addbtn;
+        Button rembtn;
 }

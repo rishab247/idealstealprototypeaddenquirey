@@ -3,7 +3,7 @@ package com.example.idealstealprototypeaddenquirey.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AddEnqData   {
+public class AddEnqData implements Serializable   {
 
     private String GradeText;
 private ArrayList<Measuredata> list;
